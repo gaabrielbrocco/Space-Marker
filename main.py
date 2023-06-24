@@ -3,6 +3,7 @@ import winsound
 from tkinter import simpledialog
 import sys
 import os
+import math
 pygame.init()
 
 tamanho = (800,600)
@@ -26,6 +27,12 @@ running = True
 salvaPontos = "Pressione F10 para SALVAR os pontos marcados"
 carregaPontos = "Pressione F11 para CARREGAR os pontos marcados anteriormente"
 deletaPontos = "Pressione F12 para DELETAR os pontos"
+
+def calcular_distancia(estrela1, estrela2):
+    x1, y1 = estrela1
+    x2, y2 = estrela2
+    distancia = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    return distancia
 
 
 try:
@@ -98,7 +105,20 @@ try:
         if len(estrelas) >= 2:
             for i in range(len(estrelas) - 1):
                 pygame.draw.line(tela, white, estrelas[i], estrelas[i+1])
-        
+        if len(estrelas) >= 2:
+            for i in range(len(estrelas) - 1):
+                estrela1 = estrelas[i]
+                estrela2 = estrelas[i + 1]
+                distancia = calcular_distancia(estrela1, estrela2)
+
+                ponto_medio = ((estrela1[0] + estrela2[0]) // 2, (estrela1[1] + estrela2[1]) // 2)
+
+                texto_distancia = fonte.render(f"Distância: {distancia:.2f}", True, white)
+                tela.blit(texto_distancia, (ponto_medio[0], ponto_medio[1] - 10))
+
+                pygame.draw.line(tela, white, estrela1, estrela2)
+
+            
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             posicao = pygame.mouse.get_pos()
             estrelas.append(posicao)
