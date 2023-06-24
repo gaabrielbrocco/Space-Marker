@@ -1,15 +1,20 @@
 import cx_Freeze
 executables = [
-    cx_Freeze.Executable(script="main.py", icon="flappybird.ico")
+    cx_Freeze.Executable(script="main.py", icon="rocket.png")
 ]
 cx_Freeze.setup(
-    name = "FlappyBird",
+    name = "Space Marker",
     options = {
         "build_exe":{
             "packages": ["pygame"],
             "include_files": [
-                "fundo.jpg",
-                "flappybird.png"
+                "background.jpg",
+                "rocket.png",
+                "estrelas_salvas.txt",
+                "eletroMusic.mp3",
+                "main.py"
+
+                
             ]
         }
     } , executables = executables
